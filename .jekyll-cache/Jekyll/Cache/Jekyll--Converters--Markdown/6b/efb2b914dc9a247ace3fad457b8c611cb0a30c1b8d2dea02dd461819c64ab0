@@ -1,0 +1,61 @@
+I"<h2 id="linear-mixed-effect-models">LINEAR MIXED EFFECT MODELS</h2>
+
+<p><strong>Disclaimer</strong>: I wrote down these notes while trying to keep up with the conversation being had. They might not be 100% accurate. So please use them as a general guide to remember what we discussed, and figure out where to look for further, detailed, and accurate information of the topic of interest to you.
+<em>Cheers, Lorenzo.</em></p>
+
+<h4 id="random-or-fixed-effect">RANDOM OR FIXED EFFECT</h4>
+
+<p>Using the dragon example from this tutorial https://ourcodingclub.github.io/tutorials/mixed-models/, we started a discussion on the differences between random and mixed effects. See notes from previous meeting for more phylosophical interpretations/points of view. They can be found <a href="https://codertsv.github.io/LMMs">here</a>.</p>
+
+<p>In general, putting your variable as a random instead of fixed effect has the advantage of ‘saving’ you degrees of freedom, by reducing the number of parameters that have to be estimated.</p>
+
+<p>In our case, this is making an assumption about the distribution of the estimated values across the mountain ranges, as each has its own mean and variance being estimated (“ <em>each mountain range is its own unique snowflake</em> “. Cooke, 2020). At this point you should ask yourself, is this actually the case?</p>
+
+<h4 id="mixed-effect-modelling---by-sonja">MIXED EFFECT MODELLING - by Sonja</h4>
+
+<p>Sonja presented her work on measuring fetal renal parenchymal thickness (RPT) during pregnancy (thus longitudinal data).</p>
+
+<p>She measured fetal RPT at 20,24,28,32,36 weeks. Not always able to keep to schedule (e.g., patient misses a scan, birth at &lt; 36 weeks)</p>
+
+<p><em>Response variable</em>: renal parenchymal thickness (RPT)
+<em>Fixed effects</em>:</p>
+<ul>
+  <li>Gestational age</li>
+  <li>GDM, no or yes</li>
+  <li>Kidney side - Rt of Lt</li>
+  <li>Kidney part - Ant or Post</li>
+  <li>Sex - M or F</li>
+</ul>
+
+<p><em>Package</em>: ‘nlme’</p>
+
+<p>Showed how looking at (fitted) residuals, and applying a stepwise approach to adding interactions and random/mixed effects can guide your choice of what variables to include in the final model.</p>
+
+<p>Contact Sonja directly for example code or further discussion on this. (<strong>Disclaimer #2</strong> sorry for not summarising this more thoroughly, I was trying to follow her presentation and not being too familiar with this area I had to focus.)</p>
+
+<h4 id="model-selection">MODEL SELECTION</h4>
+
+<p>At this point we started a brief discussion on whether all members use a similar step-wise approach for model selection</p>
+
+<p><strong>Eric N</strong>: agrees on model selection in a stepwise approach, either by hand or using packages that automate the selection of effects and interactions</p>
+
+<p><strong>Ira C</strong>: highlighted the issue with automated approach. If possible, it is good to keep an exploratory approach, trying to minimise the size of the model and knowing your data (e.g., residuals).</p>
+
+<p>The two (automated and manual) could be used conjunctly to assess whether the same ‘best’ model is obtained. The same could be down with a bottom-up vs top-down approach (i.e., start once from the simplest model, and once from the most complex model, and compare the obtained best models. If you obtain the same best model, this should give you a hint your result is robust)</p>
+
+<h4 id="package-selection">PACKAGE ‘SELECTION’</h4>
+
+<p>Bethan asked how to choose ideal package (nlme, lme4, etc).</p>
+
+<p><strong>Sonja</strong>: it is a matter of output differences and workflow. Outputs between the packages differ and your choice depends on the workflow you are following, what output you can understand and process more easily, etc.</p>
+
+<p><strong>Kevin</strong>: lme4 and lmerTest work together (the latter provides p-value output for lme4 models, I think?), but lme4 and nlme are just two different packages for doing the same things (but random effects are specified differently), and also have slightly different outputs and capabilities for more complex models</p>
+
+<p><strong>Lorenzo</strong>
+Here two links I looked at to better understand differences. Feel free to add more. For newer git and github users like me this can be a good way to learn about pull request, branching, etc.</p>
+
+<p>Link for further reading: https://rpubs.com/DKCH2020/578881</p>
+
+<p>Conversation on stack exchange (although a bit old, might not be considering updates):
+https://stats.stackexchange.com/questions/5344/how-to-choose-nlme-or-lme4-r-library-for-mixed-effects-models</p>
+:ET

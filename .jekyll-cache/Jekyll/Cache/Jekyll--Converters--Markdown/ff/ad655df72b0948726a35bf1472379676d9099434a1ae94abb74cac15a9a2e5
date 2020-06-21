@@ -1,0 +1,196 @@
+I"��<h1 id="anything-goes-loops">Anything Goes: Loops</h1>
+<p><em>Examples from our ‘anything goes’ loop session on 24th of Feb 2020</em></p>
+
+<h2 id="python">Python</h2>
+<p>Wytamma presented an algorithm that uses a for loop to calculate the hamming distance of two sequences.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">hamming_distance</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="s">"""
+    Return the Hamming distance between equal-length sequences
+    https://en.wikipedia.org/wiki/Hamming_distance#Algorithm_example
+    """</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">s2</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">"Undefined for sequences of unequal length"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">el1</span> <span class="o">!=</span> <span class="n">el2</span> <span class="k">for</span> <span class="n">el1</span><span class="p">,</span> <span class="n">el2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">))</span> 
+</code></pre></div></div>
+
+<p>The comprehension on the final line can be written as a multiline loop as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">l</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">el1</span><span class="p">,</span> <span class="n">el2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+    <span class="n">l</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">el1</span> <span class="o">!=</span> <span class="n">el2</span><span class="p">)</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</code></pre></div></div>
+<p>Here’s a <a href="https://gist.github.com/Wytamma/18b76543857b328d4fa25ca377252728">link</a> to a gist with more information.</p>
+
+<h2 id="bash">Bash</h2>
+<p>Chloë presented a loop where she uses <a href="http://www.usadellab.org/cms/?page=trimmomatic">trimmomatic</a> to trim her read adapters from her multiple fasta files.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>i <span class="k">in</span> <span class="k">*</span>_R1.fastq.gz <span class="c">#any file that ends with </span>
+<span class="k">do
+</span><span class="nv">filename</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$i</span>|cut <span class="nt">-c</span> 1-3<span class="sb">`</span> <span class="c">#for output use a substring to just cut first 3 characters</span>
+<span class="nb">echo</span> <span class="nv">$filename</span>
+  trimmomatic SE <span class="nt">-phred33</span> <span class="nt">-threads</span> 10 <span class="se">\ </span>
+  <span class="nv">$i</span> <span class="se">\</span>
+  <span class="k">${</span><span class="nv">filename</span><span class="k">}</span>_trimmed.fastq.gz <span class="se">\</span>
+  ILLUMINACLIP:TruSeq3-SE:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36 <span class="c">#settings from example TruSeq, should adapt for your specific run</span>
+<span class="k">done
+
+</span><span class="nb">echo</span> <span class="s2">"Trimming reads like a baller"</span> <span class="c">#because</span>
+</code></pre></div></div>
+
+<p>Bash uses ‘do’ and ‘done’ like R uses parentheses {} and python uses white space :)
+If you want to try a bash loop there’s a tutorial <a href="https://linuxize.com/post/bash-for-loop/">here</a>.</p>
+
+<h2 id="r">R</h2>
+
+<p>Legana suggested <a href="https://r4ds.had.co.nz/iteration.html">Chapter 21: Iterations</a> from <strong>R for Data Science</strong> book by Garrett Grolemund and Hadley Wickham. This open ebook contains very good information about the use of R from a <em>tidyverse</em> philosophy.</p>
+
+<p>César presented some dummy examples using <code class="highlighter-rouge">for loops</code> in R. The aim from this first dummy example was to demonstrate <code class="highlighter-rouge">R</code> loops syntax. In this case, given a vector <code class="highlighter-rouge">x</code> we wanted to multiply each element by 5, and replace each element with the result from this operation.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w">
+
+</span><span class="c1">## Multiply each elemnt in a vector</span><span class="w">
+</span><span class="n">x</span><span class="o">*</span><span class="m">5</span><span class="w">
+
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">x</span><span class="p">)){</span><span class="w">
+  </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="m">5</span><span class="w">
+  </span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We also discussed <code class="highlighter-rouge">for loops</code> styles. Thus, options one and two from example below are preferred over option three. You can explore different outputs in each option when using a null vector (e.g . <code class="highlighter-rouge">x &lt;- NULL</code>)</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Option one</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">x</span><span class="p">){</span><span class="w">
+  </span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1"># Option two</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">x</span><span class="p">)){</span><span class="w">
+  </span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1"># Option three</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">x</span><span class="p">)){</span><span class="w">
+  </span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We created a simple control flow statement using <code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">else if</code>, and <code class="highlighter-rouge">else</code> statements inside a <code class="highlighter-rouge">for loop</code>. Thus, this control flow statement tell us for each element in <code class="highlighter-rouge">x</code> if its modulo is zero when divided by 2 or 3.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">x</span><span class="p">)){</span><span class="w">
+  </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">5</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">){</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s2">" is an even number because modulo is zero when divided by 2"</span><span class="p">))</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">){</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s2">" modulo is zero when divided by 3, "</span><span class="p">))</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+  </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="s2">" is an odd number becasue modulo is not zero"</span><span class="p">))</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We discussed removing <em>dummy variables</em> created by <code class="highlighter-rouge">for loops</code> (e.g. <code class="highlighter-rouge">i</code>, <code class="highlighter-rouge">x</code> and <code class="highlighter-rouge">y</code> below), and using the garbage collectors <code class="highlighter-rouge">gc</code> to emptied memory after large calculations.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">seq</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="n">x</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nf">seq_along</span><span class="p">(</span><span class="n">x</span><span class="p">)){</span><span class="w">
+  </span><span class="n">y</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">5</span><span class="w">
+  </span><span class="n">z</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">sqrt</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1000</span><span class="o">/</span><span class="m">3</span><span class="w">
+  </span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">z</span><span class="w">
+  </span><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'y'</span><span class="p">,</span><span class="w"> </span><span class="s1">'z'</span><span class="p">,</span><span class="w"> </span><span class="s1">'i'</span><span class="p">))</span><span class="w">
+  </span><span class="n">gc</span><span class="p">()</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="n">x</span><span class="w">
+</span></code></pre></div></div>
+
+<p>César presented an example to list all files inside a directory, and open them in the R environment (step 1). Then, these files can be merged in a list of data frames (step 2). This list of data frames can be combined into one big data frame using <code class="highlighter-rouge">for loop</code> or inbuilt R package functions (step 3). Thus, we discussed the use of <code class="highlighter-rouge">for loops</code> and inbuilt vectorized operations in R packages.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Step 1</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">here</span><span class="p">)</span><span class="w">
+</span><span class="n">here</span><span class="o">::</span><span class="n">here</span><span class="p">()</span><span class="w">
+
+</span><span class="c1">## Gather all file names contained inside folder 'data_raw' in a list</span><span class="w">
+</span><span class="n">file.names</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">list.files</span><span class="p">(</span><span class="s1">'dat_raw'</span><span class="p">,</span><span class="w"> </span><span class="n">pattern</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"*.csv"</span><span class="p">,</span><span class="w"> </span><span class="n">full.names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span><span class="n">file.names</span><span class="w">
+
+</span><span class="c1">## Take each file name, read it and save it in the environment.</span><span class="w">
+</span><span class="c1">### gc = garbage collection takes place. Useful when reading large objects and returning memory to OS</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">file.names</span><span class="p">)){</span><span class="w">
+  </span><span class="c1"># Split and atomize 'file.names' list, returning only each file name with extension at each iteration</span><span class="w">
+  </span><span class="n">start.stripped.i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file.names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dat_raw/'</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span><span class="w">
+  </span><span class="c1"># Return only file name without file extension</span><span class="w">
+  </span><span class="n">obj.name.i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start.stripped.i</span><span class="p">,</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'\\.'</span><span class="p">))[</span><span class="m">1</span><span class="p">]</span><span class="w"> </span><span class="c1"># escape character before. so it's not treated as a wildcard</span><span class="w">
+  </span><span class="c1"># Read each file into environment</span><span class="w">
+  </span><span class="n">X.i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">read.csv</span><span class="p">(</span><span class="n">file.names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">skip</span><span class="o">=</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="n">colClasses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"numeric"</span><span class="p">,</span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"numeric"</span><span class="p">,</span><span class="w"> </span><span class="s1">'character'</span><span class="p">,</span><span class="w"> 
+                                                                       </span><span class="s1">'numeric'</span><span class="p">,</span><span class="w"> </span><span class="s1">'numeric'</span><span class="p">,</span><span class="w"> </span><span class="s1">'numeric'</span><span class="p">,</span><span class="w"> </span><span class="s1">'numeric'</span><span class="p">,</span><span class="w">
+                                                                       </span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"character"</span><span class="p">,</span><span class="w"> </span><span class="s2">"numeric"</span><span class="p">,</span><span class="w">
+                                                                       </span><span class="s2">"numeric"</span><span class="p">,</span><span class="w"> </span><span class="s2">"numeric"</span><span class="p">,</span><span class="w"> </span><span class="s2">"character"</span><span class="p">))</span><span class="w">
+  </span><span class="c1"># Assign the new object in the environment to its file name</span><span class="w">
+  </span><span class="n">assign</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">obj.name.i</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X.i</span><span class="p">)</span><span class="w">
+  </span><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'start.stripped.i'</span><span class="p">,</span><span class="w"> </span><span class="s1">'obj.name.i'</span><span class="p">,</span><span class="w"> </span><span class="s1">'X.i'</span><span class="p">,</span><span class="w"> </span><span class="s1">'i'</span><span class="p">))</span><span class="w">
+  </span><span class="n">gc</span><span class="p">()</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+
+</span><span class="c1"># Step 2</span><span class="w">
+</span><span class="c1">## Create empty list and add all files contained in folder 'tracks'</span><span class="w">
+</span><span class="n">my_list</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">()</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">file.names</span><span class="p">)){</span><span class="w">
+  </span><span class="n">start.stripped.i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file.names</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'dat_raw/'</span><span class="p">))[</span><span class="m">2</span><span class="p">]</span><span class="w">
+  </span><span class="c1"># print(start.stripped.i)</span><span class="w">
+  </span><span class="n">obj.name.i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">unlist</span><span class="p">(</span><span class="n">strsplit</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start.stripped.i</span><span class="p">,</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'\\.'</span><span class="p">))[</span><span class="m">1</span><span class="p">]</span><span class="w">
+  </span><span class="n">print</span><span class="p">(</span><span class="n">obj.name.i</span><span class="p">)</span><span class="w">
+  </span><span class="n">my_list</span><span class="p">[[</span><span class="n">obj.name.i</span><span class="p">]]</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">get</span><span class="p">(</span><span class="n">obj.name.i</span><span class="p">)</span><span class="w">
+  </span><span class="c1">#obj.name.i[,2] &lt;- gsub('[()]', '', obj.name.i[,2])</span><span class="w">
+  </span><span class="c1">#obj.name.i &lt;- separate(obj.name.i, Crab_Position, into = c('x_coord', 'y_coord'), sep = ',')</span><span class="w">
+  </span><span class="n">rm</span><span class="p">(</span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s1">'start.stripped.i'</span><span class="p">,</span><span class="w"> </span><span class="s1">'obj.name.i'</span><span class="p">,</span><span class="w"> </span><span class="s1">'i'</span><span class="p">,</span><span class="w"> </span><span class="n">obj.name.i</span><span class="p">))</span><span class="w">
+  </span><span class="n">gc</span><span class="p">()</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="nf">length</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span><span class="w">
+
+</span><span class="c1"># Step 3</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">plyr</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Create a dataframe from list</span><span class="w">
+</span><span class="n">tracks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ldply</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span><span class="w"> </span><span class="n">data.frame</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>We also went through César example of using a <code class="highlighter-rouge">for loop</code> to produce several plots using <code class="highlighter-rouge">ggplot2</code>.</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Example: Plotting using for loops</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">here</span><span class="p">)</span><span class="w">
+</span><span class="n">here</span><span class="o">::</span><span class="n">here</span><span class="p">()</span><span class="w">
+
+</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="o">::</span><span class="n">here</span><span class="p">(</span><span class="s2">"dat_clean"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dat.insect_w_scores.Rdata"</span><span class="p">))</span><span class="w">
+</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="o">::</span><span class="n">here</span><span class="p">(</span><span class="s2">"dat_clean"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dat.sp_insect_scores.Rdata"</span><span class="p">))</span><span class="w">
+</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">here</span><span class="o">::</span><span class="n">here</span><span class="p">(</span><span class="s2">"dat_clean"</span><span class="p">,</span><span class="w"> </span><span class="s2">"insects.Rdata"</span><span class="p">))</span><span class="w">
+
+</span><span class="n">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span><span class="w">
+</span><span class="n">insects</span><span class="w"> </span><span class="c1"># a vector containing all insects names in other data sets</span><span class="w">
+
+</span><span class="c1">## Iterate by each element in insects and plot</span><span class="w">
+</span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">insects</span><span class="p">){</span><span class="w">
+  </span><span class="n">gnmds</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ggplot</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="n">geom_point</span><span class="p">(</span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">data.withscores</span><span class="p">,</span><span class="w"> </span><span class="n">aes_string</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">"NMDS1"</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="s2">"NMDS2"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Species"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="o">=</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
+    </span><span class="c1"># geom_text(data = data.withscores, aes(x=NMDS1, y=NMDS2, label = Seasons), hjust =0, nudge_x = 0.05, size=2.5) +</span><span class="w">
+    </span><span class="n">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w">
+          </span><span class="n">axis.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+          </span><span class="n">axis.text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+          </span><span class="n">axis.ticks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+          </span><span class="n">panel.grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">(),</span><span class="w">
+          </span><span class="n">panel.border</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_rect</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NA</span><span class="p">),</span><span class="w">
+          </span><span class="n">panel.background</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_blank</span><span class="p">())</span><span class="w">
+  
+  </span><span class="n">print</span><span class="p">(</span><span class="n">gnmds</span><span class="p">)</span><span class="w">
+  </span><span class="n">ggsave</span><span class="p">(</span><span class="n">here</span><span class="o">::</span><span class="n">here</span><span class="p">(</span><span class="s2">"results"</span><span class="p">,</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s2">"_nmds_bubbles.jpeg"</span><span class="p">)),</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">12</span><span class="p">,</span><span class="w"> </span><span class="n">units</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'cm'</span><span class="p">,</span><span class="w"> </span><span class="n">dpi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">300</span><span class="p">)</span><span class="w">
+  </span><span class="n">Sys.sleep</span><span class="p">(</span><span class="m">1</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+:ET

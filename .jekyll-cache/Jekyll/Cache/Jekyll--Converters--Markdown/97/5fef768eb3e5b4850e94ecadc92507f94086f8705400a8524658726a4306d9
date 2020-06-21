@@ -1,0 +1,50 @@
+I"�<h1 id="data-storage-and-r-templates-for-research-analyses">Data storage and R templates for research analyses</h1>
+
+<p>Joseph Moxon presented his take on how to use R for data storage best practices,
+and started a conversation on producing R templates for research analyses.</p>
+
+<p><strong>Ira C.</strong>: data often too large to be stored on the same location as the scripts.</p>
+
+<p><strong>Cesar H.</strong>: in the process of submitting data. Trying to find good example of metadata
+in the Tropical Data Hub, and couldn’t find a good example. Looked at papers from his team
+and other JCU coworkers, and didn’t find complete data, non-available code, mislabelled 
+files, etc.</p>
+
+<p><strong>Wytamma W.</strong>: Github would be a great place to have private repositories where to share 
+code and comment on each others scripts</p>
+
+<h2 id="where-to-from-here">Where to from here?</h2>
+
+<p><strong>Ira C.</strong>: It would be good to, as Joseph suggested, subdivide into disciplines and 
+produce guidelines. These could include: where to store the data used; things that <em>have</em> to
+be included in the script, etc.</p>
+
+<p><strong>Joseph M.</strong>: It would be good to <strong>identify key areas</strong> that will likely share similar 
+needs and challenges (e.g., Population genomics/Phylogenomics; Medical trials; etc.)</p>
+
+<h3 id="expressions-of-interest">Expressions of interest</h3>
+
+<p><strong>Peter C</strong>: keen to help produce guidelines for pop gen/genomic data</p>
+
+<p><strong>Lorenzo B</strong>: keen to help produce guidelines for pop gen/genomic data</p>
+
+<h2 id="examples-of-reproducible-data-and-useful-resources">Examples of reproducible data and useful resources</h2>
+
+<p><strong>Legana F.</strong>: Just published a paper, and has script to reproduce everything that was 
+done on <a href="https://github.com/Legana/AMP_pub">github</a> for her <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5012">publication</a></p>
+
+<p><strong>Cesar H.</strong>: <em><a href="https://journals.plos.org/ploscompbiol/article/related?id=10.1371/journal.pcbi.1005097">Ten simple solutions</a> for Digital data storage</em></p>
+
+<p><strong>Cesar H.</strong>: Shared his <a href="https://www.biorxiv.org/content/10.1101/2020.05.11.085803v1.full">paper</a> that will have code available once peer-reviewed</p>
+
+<p><strong>Lorenzo B.</strong>: <em>Good example of pop gen data availability and reproducibility</em> <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5012">here</a>, see 
+supplementary information.</p>
+
+<h2 id="coding-challenges-with-rosalind">Coding challenges with <strong>Rosalind</strong></h2>
+
+<p>Ira suggested starting an appended session (15 min on top of the usual 11 am to midday), to
+ go over 1-2 rosalind coding problems. Everyone seemed to agree. Peter C. will start a slack 
+ channel for it.</p>
+
+<p>Find the website <a href="http://rosalind.info/problems/locations/">here</a></p>
+:ET
